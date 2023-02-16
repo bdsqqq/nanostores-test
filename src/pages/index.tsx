@@ -16,10 +16,11 @@ const CellStore = mapTemplate<{
 });
 
 const Cell = ({ id }: { id: string }) => {
-  const cell = useStore(CellStore(id));
+  const cell = CellStore(id);
+  const cellStore = useStore(cell);
 
   const reveal = action(cell, "reveal", () => {
-    cell.open = true;
+    cell.setKey("open", true);
 
     return cell;
   });
@@ -31,17 +32,17 @@ const Cell = ({ id }: { id: string }) => {
         reveal();
         console.log(cell);
       }}
-      className="flex w-fit gap-2 bg-green-300"
+      className="flex aspect-square w-24 gap-2 bg-green-300"
     >
       <div>{id}</div>
-      <div>{cell.open + ""}</div>
-      <div>{cell.value}</div>
+      <div>{cellStore.open + ""}</div>
+      <div>{cellStore.value}</div>
     </button>
   );
 };
 
 const Home: NextPage = () => {
-  const cellArray = new Array(9).fill(0).map((_, i) => i);
+  const cellArray = new Array(100).fill(0).map((_, i) => i);
 
   return (
     <>
@@ -51,7 +52,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <div className="grid w-fit grid-cols-3 gap-2">
+        <div className="grid w-fit grid-cols-10 gap-2">
           {cellArray.map((i) => (
             <Cell id={i.toString()} />
           ))}
