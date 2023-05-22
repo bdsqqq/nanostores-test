@@ -1,6 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
 
 import { mapTemplate, action } from "nanostores";
 import { useStore } from "@nanostores/react";
@@ -54,7 +53,7 @@ const Home: NextPage = () => {
       <main>
         <div className="grid w-fit grid-cols-10 gap-2">
           {cellArray.map((i) => (
-            <Cell id={i.toString()} />
+            <Cell key={i.toString()} id={i.toString()} />
           ))}
         </div>
       </main>
